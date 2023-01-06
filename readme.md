@@ -1,4 +1,4 @@
-# MyGram (Sosial Media) - Golang - ECHO
+# Absensi - Golang - ECHO
 
 **Development by:** 
 - Findryankp
