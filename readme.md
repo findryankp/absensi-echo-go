@@ -1,4 +1,4 @@
-# Absensi - Golang - ECHO
+# Attendance - Golang - ECHO
 
 **Development by:** 
 - Findryankp

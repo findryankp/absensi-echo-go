@@ -6,6 +6,8 @@ import (
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+
+	"absensi/models"
 )
 
 var DB *gorm.DB
@@ -24,4 +26,13 @@ func InitDB() {
 	if err != nil {
 		panic(err.Error())
 	}
+}
+
+func InitMigrate() {
+	DB.AutoMigrate(
+		&models.User{},
+		&models.Attendance{},
+		&models.Activity{},
+	)
+	fmt.Println("Migration done.")
 }
