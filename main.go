@@ -1,12 +1,11 @@
 package main
 
 import (
+	"absensi/configs"
+	"absensi/routes"
 	"fmt"
 	"log"
 	"os"
-
-	"absensi/configs"
-	"absensi/routes"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
@@ -24,7 +23,7 @@ func main() {
 	//load migration
 	configs.InitMigrate()
 
-	//init Router
+	// //init Router
 	e := echo.New()
 	routes.InitRouter(e)
 

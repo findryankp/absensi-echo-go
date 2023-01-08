@@ -32,6 +32,7 @@ func InitDB() {
 func InitMigrate() {
 	DB.AutoMigrate(
 		&models.User{},
+		&models.TypeAttendance{},
 		&models.Attendance{},
 		&models.Activity{},
 	)

@@ -6,7 +6,8 @@ import (
 
 type Attendance struct {
 	gorm.Model
-	User_id         int    `json:"user_id"`
-	User            *User  `gorm:"foreignKey:UserId"`
-	Type_attendance string `json:"type_attendance"`
+	UserId           int             `json:"user_id"`
+	User             *User           `json:"user" gorm:"foreignKey:UserId"`
+	TypeAttendanceId int             `json:"type_attendance_id"`
+	TypeAttendance   *TypeAttendance `json:"type_attendance" gorm:"foreignKey:TypeAttendanceId"`
 }
