@@ -9,11 +9,9 @@ import (
 
 type User struct {
 	gorm.Model
-	Username string `json:"username" gorm:"not null;size:256;uniqueIndex"  valid:"required~Please insert username"`
+	Name     string `json:"name" gorm:"not null;size:256;"  valid:"required~Please insert name"`
 	Email    string `json:"email" gorm:"uniqueIndex;not null;size:256" form:"email" valid:"required~Your email is required,email~Invalid email format"`
 	Password string `json:"password" gorm:"not null" form:"password" valid:"required~Your password is required,stringlength(6|100)~Minimal character of password is 6"`
-	Age      int    `json:"age" gorm:"not null" valid:"range(8|150)"`
-	Role     string `json:"role"`
 }
 
 func (user *User) BeforeCreate(tx *gorm.DB) (err error) {

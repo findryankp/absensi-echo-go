@@ -28,6 +28,7 @@ func InitDB() {
 	}
 }
 
+//migrate db
 func InitMigrate() {
 	DB.AutoMigrate(
 		&models.User{},
