@@ -10,12 +10,9 @@ import (
 )
 
 func isExistAttendance(attendance *models.Attendance, form models.Attendance) bool {
-	query := configs.DB.Where(form).First(&attendance)
-
-	if query.Error != nil {
+	if query := configs.DB.Where(form).First(&attendance); query.Error != nil {
 		return false
 	}
-
 	return true
 }
 
