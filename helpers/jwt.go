@@ -55,17 +55,20 @@ func ValidateToken(signedToken string) (err error) {
 }
 
 func ClaimToken(c echo.Context) JWTClaim {
-
-	hmacSecret := os.Getenv("SECRETKEY")
-	reqToken := c.Request().Header.Get(os.Getenv("HEADERAUTH"))
-
-	prefix := "Bearer "
-	tokenString := strings.TrimPrefix(reqToken, prefix)
-
+	secretKey, tokenString := HeaderToken(c)
 	claims := &JWTClaim{}
 	jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
-		return hmacSecret, nil
+		return secretKey, nil
 	})
 
 	return *claims
+}
+
+func HeaderToken(c echo.Context) (secretKey string, tokenString string) {
+	secretKey = os.Getenv("SECRETKEY")
+	reqToken := c.Request().Header.Get(os.Getenv("HEADERAUTH"))
+	prefix := "Bearer "
+	tokenString = strings.TrimPrefix(reqToken, prefix)
+
+	return secretKey, tokenString
 }

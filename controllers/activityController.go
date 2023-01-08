@@ -12,7 +12,7 @@ import (
 
 func GetAllActivity(c echo.Context) error {
 	var activities []models.Activity
-	configs.DB.Find(&activities)
+	configs.DB.Where("user_id = ?", helpers.ClaimToken(c).ID).Find(&activities)
 	return helpers.ResponseJson(c, http.StatusOK, true, "-", activities)
 }
 
@@ -21,6 +21,10 @@ func GetActivity(c echo.Context) error {
 
 	if isExist := configs.DB.Where("id = ?", c.Param("id")).First(&activity); isExist.Error != nil {
 		return helpers.ResponseJson(c, http.StatusBadRequest, false, "Data not found", nil)
+	}
+
+	if activity.UserId != helpers.ClaimToken(c).ID {
+		return helpers.ResponseJson(c, http.StatusBadRequest, false, "You do not have authorization for this id", nil)
 	}
 
 	return helpers.ResponseJson(c, http.StatusOK, true, "-", activity)
@@ -79,7 +83,15 @@ func DeleteActivity(c echo.Context) error {
 }
 
 func RiwayatActivity(c echo.Context) error {
+	date := c.QueryParam("date") + "%"
 	var activity []models.Activity
-	configs.DB.Where("date like ?", "%"+c.QueryParam("date")+"%").Find(&activity)
-	return helpers.ResponseJson(c, http.StatusOK, true, "Activity deleted", nil)
+	if c.QueryParam("date") != "" {
+		configs.DB.Where("user_id = ?", helpers.ClaimToken(c).ID).
+			Where("date LIKE ?", date).
+			Find(&activity)
+	} else {
+		configs.DB.Where("user_id = ?", helpers.ClaimToken(c).ID).Find(&activity)
+	}
+
+	return helpers.ResponseJson(c, http.StatusOK, true, "-", activity)
 }
