@@ -18,9 +18,6 @@
 ## Run Manually
 - go run .
 
-## Run With Docker
-- go run .
-
 ## Fitur
 - Login
 - Check In 

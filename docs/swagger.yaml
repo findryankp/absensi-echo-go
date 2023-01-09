@@ -1,0 +1,224 @@
+definitions:
+  models.FormActivity:
+    properties:
+      activity:
+        type: string
+      date:
+        type: string
+    type: object
+  models.FormCreateAttendance:
+    properties:
+      type_attendance_id:
+        type: integer
+    type: object
+  models.FormLogin:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  models.FormRegister:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /activity:
+    get:
+      description: Get a list of Activity.
+      parameters:
+      - description: 'Authorization. How to input in swagger : '' Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Get All Activity.
+      tags:
+      - Activity
+    post:
+      description: Create Activity .
+      parameters:
+      - description: the body to create a new Activity
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/models.FormActivity'
+      - description: 'Authorization. How to input in swagger : '' Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+      summary: Create Activity .
+      tags:
+      - Activity
+  /activity/:id:
+    delete:
+      description: Delete a Activity.
+      parameters:
+      - description: 'Authorization. How to input in swagger : '' Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Delete Activity By Id.
+      tags:
+      - Activity
+    get:
+      description: Get a Activity.
+      parameters:
+      - description: 'Authorization. How to input in swagger : '' Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Get Activity By Id.
+      tags:
+      - Activity
+    put:
+      description: Update Activity .
+      parameters:
+      - description: the body to Update a new Activity
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/models.FormActivity'
+      - description: 'Authorization. How to input in swagger : '' Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Update Activity .
+      tags:
+      - Activity
+  /activity/riwayat:
+    get:
+      description: Riwayat Activity.
+      parameters:
+      - description: 'Authorization. How to input in swagger : '' Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Riwayat Activity.
+      tags:
+      - Activity
+  /attendance:
+    post:
+      description: Create Attendance .
+      parameters:
+      - description: the body to create a new Attendance
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/models.FormCreateAttendance'
+      - description: 'Authorization. How to input in swagger : '' Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+      summary: Create Attendance .
+      tags:
+      - Attendance
+  /attendance/riwayat:
+    get:
+      description: Get a list of Riwayat Attendance.
+      parameters:
+      - description: 'Authorization. How to input in swagger : '' Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Riwayat Attendance.
+      tags:
+      - Attendance
+  /auth/register:
+    post:
+      description: Create User .
+      parameters:
+      - description: the body to register user
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/models.FormRegister'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.FormRegister'
+      summary: Create User .
+      tags:
+      - AUTH
+  /auth/token/:
+    post:
+      description: Login User.
+      parameters:
+      - description: the body to login user
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/models.FormLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.FormLogin'
+      summary: Login User.
+      tags:
+      - AUTH
+swagger: "2.0"

@@ -12,6 +12,21 @@ import (
 )
 
 func main() {
+	//load Configuration
+	loadConfiguration()
+
+	//init Router
+	e := echo.New()
+	routes.InitRouter(e)
+
+	//start Echo
+	e.Start(fmt.Sprintf(":%v", os.Getenv("PORT")))
+}
+
+func loadConfiguration() {
+	//load documentation
+	configs.InitSwagger()
+
 	//Load .env
 	if err := godotenv.Load(".env"); err != nil {
 		log.Fatalf("Error loading .env file")
@@ -22,11 +37,4 @@ func main() {
 
 	//load migration
 	configs.InitMigrate()
-
-	// //init Router
-	e := echo.New()
-	routes.InitRouter(e)
-
-	//start Echo
-	e.Start(fmt.Sprintf(":%v", os.Getenv("PORT")))
 }

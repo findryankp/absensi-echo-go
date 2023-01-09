@@ -28,6 +28,15 @@ func IsExistAttendance(c echo.Context, typeAttendanceId int) bool {
 	return true
 }
 
+// Create Attendance godoc
+// @Summary Create Attendance .
+// @Description Create Attendance .
+// @Tags Attendance
+// @Param Body body models.FormCreateAttendance true "the body to create a new Attendance"
+// @Produce json
+// @Param Authorization header string true "Authorization. How to input in swagger : ' Bearer <insert_your_token_here>'"
+// @Success 201
+// @Router /attendance [post]
 func CreateAttendance(c echo.Context) error {
 	dt := time.Now()
 	dateNow := dt.Format("2006-01-02") + "%"
@@ -49,6 +58,14 @@ func CreateAttendance(c echo.Context) error {
 	return helpers.ResponseJson(c, http.StatusCreated, true, "Successfully", nil)
 }
 
+// Riwayat Attendance godoc
+// @Summary Riwayat Attendance.
+// @Description Get a list of Riwayat Attendance.
+// @Tags Attendance
+// @Produce json
+// @Param Authorization header string true "Authorization. How to input in swagger : ' Bearer <insert_your_token_here>'"
+// @Success 200
+// @Router /attendance/riwayat [get]
 func AttendaceRiwayat(c echo.Context) error {
 	var attendance []models.Attendance
 	configs.DB.Where("user_id = ?", helpers.ClaimToken(c).ID).

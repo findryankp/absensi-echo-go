@@ -10,12 +10,28 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// Get All Activity godoc
+// @Summary Get All Activity.
+// @Description Get a list of Activity.
+// @Tags Activity
+// @Produce json
+// @Param Authorization header string true "Authorization. How to input in swagger : ' Bearer <insert_your_token_here>'"
+// @Success 200
+// @Router /activity [get]
 func GetAllActivity(c echo.Context) error {
 	var activities []models.Activity
 	configs.DB.Where("user_id = ?", helpers.ClaimToken(c).ID).Find(&activities)
 	return helpers.ResponseJson(c, http.StatusOK, true, "-", activities)
 }
 
+// Get Activity By Id godoc
+// @Summary Get Activity By Id.
+// @Description Get a Activity.
+// @Tags Activity
+// @Produce json
+// @Param Authorization header string true "Authorization. How to input in swagger : ' Bearer <insert_your_token_here>'"
+// @Success 200
+// @Router /activity/:id [get]
 func GetActivity(c echo.Context) error {
 	var activity models.Activity
 
@@ -30,9 +46,19 @@ func GetActivity(c echo.Context) error {
 	return helpers.ResponseJson(c, http.StatusOK, true, "-", activity)
 }
 
+// Create Activity godoc
+// @Summary Create Activity .
+// @Description Create Activity .
+// @Tags Activity
+// @Param Body body models.FormActivity true "the body to create a new Activity"
+// @Produce json
+// @Param Authorization header string true "Authorization. How to input in swagger : ' Bearer <insert_your_token_here>'"
+// @Success 201
+// @Router /activity [post]
 func CreateActivity(c echo.Context) error {
 	var activity models.Activity
 	c.Bind(&activity)
+	activity.UserId = helpers.ClaimToken(c).ID
 
 	layoutFormat := "2006-01-02 15:04:05"
 	value := activity.Date
@@ -50,6 +76,15 @@ func CreateActivity(c echo.Context) error {
 	return helpers.ResponseJson(c, http.StatusCreated, true, "-", activity)
 }
 
+// Update Activity godoc
+// @Summary Update Activity .
+// @Description Update Activity .
+// @Tags Activity
+// @Param Body body models.FormActivity true "the body to Update a new Activity"
+// @Produce json
+// @Param Authorization header string true "Authorization. How to input in swagger : ' Bearer <insert_your_token_here>'"
+// @Success 200
+// @Router /activity/:id [put]
 func UpdateActivity(c echo.Context) error {
 	var activity, updateForm models.Activity
 	if isExist := configs.DB.Where("id = ?", c.Param("id")).First(&activity); isExist.Error != nil {
@@ -57,6 +92,7 @@ func UpdateActivity(c echo.Context) error {
 	}
 
 	c.Bind(&updateForm)
+	activity.UserId = helpers.ClaimToken(c).ID
 
 	layoutFormat := "2006-01-02 15:04:05"
 	value := updateForm.Date
@@ -72,6 +108,14 @@ func UpdateActivity(c echo.Context) error {
 	return helpers.ResponseJson(c, http.StatusOK, true, "-", activity)
 }
 
+// Delete Activity By Id godoc
+// @Summary Delete Activity By Id.
+// @Description Delete a Activity.
+// @Tags Activity
+// @Produce json
+// @Param Authorization header string true "Authorization. How to input in swagger : ' Bearer <insert_your_token_here>'"
+// @Success 200
+// @Router /activity/:id [delete]
 func DeleteActivity(c echo.Context) error {
 	var activity models.Activity
 	if isExist := configs.DB.Where("id = ?", c.Param("id")).First(&activity); isExist.Error != nil {
@@ -82,6 +126,14 @@ func DeleteActivity(c echo.Context) error {
 	return helpers.ResponseJson(c, http.StatusOK, true, "Activity deleted", nil)
 }
 
+// Riwayat Activity godoc
+// @Summary Riwayat Activity.
+// @Description Riwayat Activity.
+// @Tags Activity
+// @Produce json
+// @Param Authorization header string true "Authorization. How to input in swagger : ' Bearer <insert_your_token_here>'"
+// @Success 200
+// @Router /activity/riwayat [get]
 func RiwayatActivity(c echo.Context) error {
 	date := c.QueryParam("date") + "%"
 	var activity []models.Activity
