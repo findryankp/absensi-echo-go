@@ -20,7 +20,11 @@ func main() {
 	routes.InitRouter(e)
 
 	//start Echo
-	e.Start(fmt.Sprintf(":%v", os.Getenv("PORT")))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" // Default port if not specified
+	}
+	e.Start(fmt.Sprintf(":%v", port))
 }
 
 func loadConfiguration() {
