@@ -3,7 +3,6 @@ package main
 import (
 	"absensi/configs"
 	"absensi/routes"
-	"fmt"
 	"log"
 	"os"
 
@@ -24,7 +23,7 @@ func main() {
 	if port == "" {
 		port = "8080" // Default port if not specified
 	}
-	e.Start(fmt.Sprintf(":%v", port))
+	e.Start(":" + port)
 }
 
 func loadConfiguration() {
